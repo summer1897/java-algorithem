@@ -50,14 +50,62 @@ public class ExchangeSort {
 	}
 	
 	/**
+	 * quick sort can't sort the array in which there are more than two same element 
+	 * @param array
+	 * @param left
+	 * @param right
+	 */
+	public static void quickSort(int[] array,int left,int right){
+		if(left < right){
+			int pivot = partition(array,left,right);
+			quickSort(array,left,pivot - 1);
+			quickSort(array,pivot + 1,right);
+		}
+	}
+	
+	/**
+	 * find the index position of the pivot element
+	 * @param array
+	 * @param left
+	 * @param right
+	 * @return
+	 */
+	private static int partition(int[] array,int left,int right){
+		//default select the left element of the array as the pivot element
+		int pivot = array[left];
+//		 ++left;
+		while(left < right){
+			
+			//find the first element which less than the pivot in the right side
+			//of the array
+			while(left < right && array[right] > pivot)
+				--right;
+			
+			//find the first element which great than the pivot in the left side
+			//of the array
+			while(left < right && array[left] < pivot)
+				++left;
+			
+			if(left < right){
+				Utils.swap(array, left, right);
+			}
+		}
+//		Utils.print(array);
+		pivot = left;
+		return pivot;
+	}
+	
+	/**
 	 * test
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		int[] array = Utils.getArray();
+//		int[] array = new int[]{2,1,3,9,10,8,7,6,4,5};
 		Utils.print(array);
 //		bubbleSort(array);
-		improveBubbleSort(array);
+//		improveBubbleSort(array);
+		quickSort(array,0,array.length - 1);
 		Utils.print(array);
 	}
 	
